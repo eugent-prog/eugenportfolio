@@ -16,6 +16,7 @@ $projects = portfolio_projects();
       name="description"
       content="Eugen's software engineering portfolio featuring Laravel, APIs, Node.js, React.js, TypeScript, NestJS, Next.js, PHP, MySQL, and web applications."
     />
+    <meta name="deployment-version" content="selected-work-v2" />
     <title><?= h($site['name']); ?> | Software Engineer Portfolio</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="assets/app.js" defer></script>
