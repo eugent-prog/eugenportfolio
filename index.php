@@ -1,0 +1,278 @@
+<?php
+declare(strict_types=1);
+
+require __DIR__ . '/includes/bootstrap.php';
+
+$site = portfolio_config()['site'];
+$skills = portfolio_skills();
+$projects = portfolio_projects();
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Eugen's software engineering portfolio featuring Laravel, APIs, Node.js, React.js, TypeScript, NestJS, Next.js, PHP, MySQL, and web applications."
+    />
+    <title><?= h($site['name']); ?> | Software Engineer Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="assets/app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav container" aria-label="Main navigation">
+        <a class="brand" href="#top" aria-label="Eugen portfolio home">
+          <?= h($site['name']); ?>
+        </a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a class="nav-cta" href="#contact">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-label="Software engineering portfolio hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+          <p class="eyebrow">Software Engineering Portfolio</p>
+          <h1><?= h($site['name']); ?>, Software Engineer</h1>
+          <p class="hero-copy">
+            I build practical full-stack applications with clean interfaces,
+            reliable backend logic, API integrations, and code that is easy to
+            maintain.
+          </p>
+          <div class="hero-actions" aria-label="Portfolio actions">
+            <a class="button primary" href="#projects">View Projects</a>
+            <a class="button secondary" href="#contact">Contact Me</a>
+          </div>
+          <p class="hero-note">
+            Available for software engineering roles / Full-stack web applications
+          </p>
+          <dl class="quick-facts" aria-label="Engineering focus areas">
+            <div>
+              <dt>Focus</dt>
+              <dd>Full-stack web development</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>Laravel, React, APIs</dd>
+            </div>
+            <div>
+              <dt>Goal</dt>
+              <dd>Software engineering role</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section id="about" class="section intro-section">
+        <div class="container two-column">
+          <div>
+            <p class="section-kicker">About</p>
+            <h2>Engineer-minded, user-focused, and ready to contribute.</h2>
+          </div>
+          <div class="stacked-copy">
+            <p>
+              I enjoy turning requirements into working software: planning the
+              interface, shaping the data flow, building features, and testing
+              the parts that matter. My work is strongest when a product needs
+              clear screens, dependable logic, and steady iteration.
+            </p>
+            <p>
+              I have experience with Laravel, n8n, API integrations, Node.js,
+              React.js, TypeScript, NestJS, Next.js, PHP, MySQL, and related
+              full-stack tools.
+            </p>
+            <p>
+              I am a growing software engineer focused on strengthening my
+              ability through real projects, continuous practice, and learning
+              from every build.
+            </p>
+            <p>
+              I am applying for software engineering opportunities where I can
+              help ship useful products, improve code quality, and keep learning
+              from experienced engineers.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="section muted-section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-kicker">Skills</p>
+            <h2>Frameworks, languages, and tools I use to build software.</h2>
+          </div>
+          <div class="skills-grid">
+            <?php foreach ($skills as $skill) : ?>
+              <article class="skill-card">
+                <h3><?= h($skill['category']); ?></h3>
+                <p><?= h($skill['items']); ?></p>
+              </article>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="container">
+          <div class="section-heading compact">
+            <p class="section-kicker">Projects</p>
+            <h2>Selected work that shows how I solve problems.</h2>
+          </div>
+
+          <div class="projects-grid">
+            <?php foreach ($projects as $project) : ?>
+              <?php
+              $tags = array_filter(array_map('trim', explode(',', $project['technologies'])));
+              $titleUrl = $project['repo_url'] ?: ($project['project_url'] ?: '');
+              ?>
+              <article class="project-card">
+                <div class="project-topline">
+                  <span class="project-type"><?= h($project['project_type']); ?></span>
+                  <span class="project-year"><?= h((string) $project['project_year']); ?></span>
+                </div>
+                <h3>
+                  <?php if ($titleUrl !== '') : ?>
+                    <a
+                      class="project-title-link"
+                      href="<?= h($titleUrl); ?>"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <?= h($project['title']); ?>
+                    </a>
+                  <?php else : ?>
+                    <?= h($project['title']); ?>
+                  <?php endif; ?>
+                </h3>
+                <p><?= h($project['summary']); ?></p>
+
+                <?php if (!empty($project['project_url']) || !empty($project['repo_url'])) : ?>
+                  <div class="project-links">
+                    <?php if (!empty($project['project_url'])) : ?>
+                      <a
+                        href="<?= h($project['project_url']); ?>"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Live
+                      </a>
+                    <?php endif; ?>
+                    <?php if (!empty($project['repo_url'])) : ?>
+                      <a
+                        href="<?= h($project['repo_url']); ?>"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Code
+                      </a>
+                    <?php endif; ?>
+                  </div>
+                <?php endif; ?>
+
+                <ul class="tag-list" aria-label="Project technologies">
+                  <?php foreach ($tags as $tag) : ?>
+                    <li><?= h($tag); ?></li>
+                  <?php endforeach; ?>
+                </ul>
+              </article>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      </section>
+
+      <section class="section proof-section">
+        <div class="container proof-grid">
+          <div>
+            <p class="section-kicker">How I Work</p>
+            <h2>Build the smallest useful version, then improve it carefully.</h2>
+          </div>
+          <div class="proof-list">
+            <article>
+              <h3>1. Understand the problem</h3>
+              <p>Clarify the user flow, data needed, and edge cases first.</p>
+            </article>
+            <article>
+              <h3>2. Implement cleanly</h3>
+              <p>Keep components, routes, and data logic easy to follow.</p>
+            </article>
+            <article>
+              <h3>3. Test and refine</h3>
+              <p>Check behavior on different screen sizes and fix weak spots.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact-section">
+        <div class="container contact-layout">
+          <div>
+            <p class="section-kicker">Contact</p>
+            <h2>Ready for software engineering opportunities.</h2>
+            <p>
+              I would be glad to discuss junior software engineering, web
+              development, or internship opportunities.
+            </p>
+          </div>
+          <div class="contact-panel" aria-label="Contact links and form">
+            <a href="mailto:<?= h($site['email']); ?>"><?= h($site['email']); ?></a>
+
+            <form
+              class="contact-form"
+              action="submit_contact.php"
+              method="post"
+              data-contact-form
+              novalidate
+            >
+              <label>
+                Name
+                <input
+                  type="text"
+                  name="name"
+                  maxlength="120"
+                  autocomplete="name"
+                  required
+                />
+              </label>
+              <label>
+                Email
+                <input
+                  type="email"
+                  name="email"
+                  maxlength="160"
+                  autocomplete="email"
+                  required
+                />
+              </label>
+              <label>
+                Subject
+                <input type="text" name="subject" maxlength="160" required />
+              </label>
+              <label>
+                Message
+                <textarea name="message" rows="5" maxlength="2000" required></textarea>
+              </label>
+              <button class="button primary form-button" type="submit">
+                Send Message
+              </button>
+              <p class="form-status" data-form-status role="status"></p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>&copy; 2026 <?= h($site['name']); ?>. Software Engineer Portfolio.</p>
+        <a href="#top">Back to top</a>
+      </div>
+    </footer>
+  </body>
+</html>
