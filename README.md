@@ -25,10 +25,24 @@ php -S 127.0.0.1:8000
 
 Then open `http://127.0.0.1:8000/index.php`.
 
+## Vercel Static Build
+
+Vercel does not run the PHP/MySQL contact form directly. Generate a static
+deployment page before deploying:
+
+```bash
+php scripts/build-static.php
+```
+
+This writes `index.html` for Vercel and keeps the PHP version available at
+`index.php`.
+
 ## Files
 
 - `index.php` renders the portfolio.
+- `index.html` is the generated static version for Vercel.
 - `submit_contact.php` validates and saves contact messages.
+- `scripts/build-static.php` generates the Vercel static page.
 - `includes/bootstrap.php` handles config, MySQL connection, and fallback content.
 - `database/schema.sql` creates and seeds the MySQL tables.
 - `styles.css` contains the layout and visual design.

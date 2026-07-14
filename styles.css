@@ -541,11 +541,16 @@ p {
   background: var(--panel-2);
 }
 
-.contact-form {
+.contact-form,
+.contact-static {
   display: grid;
   gap: 14px;
   padding: 22px;
   background: var(--panel);
+}
+
+.contact-static p {
+  margin: 0;
 }
 
 .contact-form label {
